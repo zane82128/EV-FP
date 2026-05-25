@@ -86,8 +86,13 @@ class BaseTask():
         # if running with a viewer, set up keyboard shortcuts and camera
         if self.headless == False:
             # subscribe to keyboard shortcuts
+            cam_props = gymapi.CameraProperties()
+            # Use a moderate default window size so the WSLg viewer stays fully
+            # visible on common laptop screens. Allow overrides via env vars.
+            cam_props.width = int(os.environ.get("SKILLMIMIC_VIEWER_WIDTH", 1280))
+            cam_props.height = int(os.environ.get("SKILLMIMIC_VIEWER_HEIGHT", 720))
             self.viewer = self.gym.create_viewer(
-                self.sim, gymapi.CameraProperties())
+                self.sim, cam_props)
             self.gym.subscribe_viewer_keyboard_event(
                 self.viewer, gymapi.KEY_ESCAPE, "QUIT")
             # self.gym.subscribe_viewer_keyboard_event(

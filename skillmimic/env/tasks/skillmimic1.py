@@ -14,6 +14,25 @@ from utils.motion_data_handler import MotionDataHandler
 
 from env.tasks.humanoid_object_task import HumanoidWholeBodyWithObject
 
+TABLE_TENNIS_SKILLS = {"serve", "forehand", "backhand"}
+RACKET_GRIP_PRESET = {
+    "R_Index1_z": 0.55,
+    "R_Index2_z": 0.85,
+    "R_Index3_z": 0.55,
+    "R_Middle1_z": 0.62,
+    "R_Middle2_z": 0.92,
+    "R_Middle3_z": 0.60,
+    "R_Ring1_z": 0.68,
+    "R_Ring2_z": 0.95,
+    "R_Ring3_z": 0.62,
+    "R_Pinky1_z": 0.78,
+    "R_Pinky2_z": 1.00,
+    "R_Pinky3_z": 0.65,
+    "R_Thumb1_y": -0.35,
+    "R_Thumb1_z": 0.22,
+    "R_Thumb2_z": 0.18,
+}
+
 
 class SkillMimic1BallPlay(HumanoidWholeBodyWithObject): 
     def __init__(self, cfg, sim_params, physics_engine, device_type, device_id, headless):
@@ -48,6 +67,19 @@ class SkillMimic1BallPlay(HumanoidWholeBodyWithObject):
         self.condition_size = 64
         
         self.ref_hoi_obs_size = 323 + len(self.cfg["env"]["keyBodies"])*3 + 6 #V1
+        self._r_wrist_body_id = self.gym.find_actor_rigid_body_handle(
+            self.envs[0], self.humanoid_handles[0], "R_Wrist"
+        )
+        self._humanoid_dof_dict = self.gym.get_actor_dof_dict(
+            self.envs[0], self.humanoid_handles[0]
+        )
+        self._racket_grip_scale = float(
+            os.environ.get("SKILLMIMIC_RACKET_GRIP_SCALE", "1.0")
+        )
+        self._enable_racket_grip_preset = (
+            os.environ.get("SKILLMIMIC_ENABLE_RACKET_GRIP", "1") != "0"
+        )
+        self._racket_grip_dof_values = {}
 
         self._curr_ref_obs = torch.zeros((self.num_envs, self.ref_hoi_obs_size), device=self.device, dtype=torch.float)
         self._hist_ref_obs = torch.zeros((self.num_envs, self.ref_hoi_obs_size), device=self.device, dtype=torch.float)
@@ -70,6 +102,7 @@ class SkillMimic1BallPlay(HumanoidWholeBodyWithObject):
         
         self.switch_motion_file = cfg['env']['switch_motion_file'] if 'switch_motion_file' in cfg['env'] else None
         self._load_motion(self.motion_file, self.switch_motion_file) #ZC1
+        self._racket_grip_dof_values = self._build_racket_grip_dof_values()
 
         self.progress_buf_total = 0 # +1 操作应该放到reweight自己的task里
 
@@ -202,6 +235,30 @@ class SkillMimic1BallPlay(HumanoidWholeBodyWithObject):
         self.gym.subscribe_viewer_keyboard_event(self.viewer, gymapi.KEY_B, "035") #
 
         return
+
+    def _build_racket_grip_dof_values(self):
+        if (
+            not self.play_dataset
+            or not self._enable_racket_grip_preset
+            or self.skill_name not in TABLE_TENNIS_SKILLS
+        ):
+            return {}
+
+        preset = {}
+        for dof_name, dof_value in RACKET_GRIP_PRESET.items():
+            if dof_name not in self._humanoid_dof_dict:
+                continue
+            preset[self._humanoid_dof_dict[dof_name]] = (
+                dof_value * self._racket_grip_scale
+            )
+        return preset
+
+    def _apply_racket_grip_preset(self, env_id):
+        if not self._racket_grip_dof_values:
+            return
+
+        for dof_idx, dof_value in self._racket_grip_dof_values.items():
+            self._dof_pos[env_id, dof_idx] = dof_value
     
     def _reset_target(self, env_ids):
         super()._reset_target(env_ids)
@@ -343,6 +400,7 @@ class SkillMimic1BallPlay(HumanoidWholeBodyWithObject):
             self._humanoid_root_states[env_id, 10:13] = torch.zeros_like(self._humanoid_root_states[env_id, 10:13])
             
             self._dof_pos[env_id] = self._motion_data.hoi_data_dict[motid]['dof_pos'][t,:].clone()
+            self._apply_racket_grip_preset(env_id)
             self._dof_vel[env_id] = torch.zeros_like(self._dof_vel[env_id])
 
             # env_id_int32 = self._humanoid_actor_ids[env_id].unsqueeze(0)
@@ -369,10 +427,14 @@ class SkillMimic1BallPlay(HumanoidWholeBodyWithObject):
             
             if abnormal == True or self.show_abnorm[env_id] > 0: #Z
                 for j in range(self.num_bodies): #Z humanoid_handle == 0
+                    if j == self._r_wrist_body_id:
+                        continue
                     self.gym.set_rigid_body_color(env_ptr, 0, j, gymapi.MESH_VISUAL, gymapi.Vec3(0., 0., 1.)) 
                 self.show_abnorm[env_id] -= 1
             else:
                 for j in range(self.num_bodies): #Z humanoid_handle == 0
+                    if j == self._r_wrist_body_id:
+                        continue
                     self.gym.set_rigid_body_color(env_ptr, 0, j, gymapi.MESH_VISUAL, gymapi.Vec3(0., 1., 0.)) 
 
         self.gym.set_actor_root_state_tensor(self.sim, gymtorch.unwrap_tensor(self._root_states))

@@ -1,7 +1,48 @@
-# SpecStory explanation file
+# Local tooling
 .specstory/
-# SpecStory explanation file
-.specstory/.what-is-this.md
+.vscode/
+.idea/
 
+# Python
 **/__pycache__/
 *.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Experiment outputs
+output/
+outputs/
+runs/
+tb_logs/
+wandb/
+logs/
+nohup.out
+
+# Generated viewer/media outputs
+/images/
+/videos/
+skillmimic/data/images/
+skillmimic/data/videos/
+skillmimic/data/replay_preview/
+
+# Raw data and intermediate conversion artifacts
+/data/
+
+# Local papers / large references
+Yu et al. - 2025 - SkillMimic-V2 Learning Robust and Generalizable Interaction Skills from Sparse and Noisy Demonstrat.pdf
+
+# Optional: if you do not want to version converted table-tennis motions,
+# uncomment the next line.
+# skillmimic/data/motions/TableTennis/

@@ -123,7 +123,7 @@ class HumanoidWholeBody(BaseTask):
             self._dof_obs_size = (51)*3
             self._num_actions = (51)*3
             self._num_obs = 1 + (52) * (3 + 6 + 3 + 3) - 3 + 10*3 #V1 + self.condition_size + obj_obs_size + self.get_task_obs_size()
-        elif (asset_file == "mjcf/mocap_humanoid.xml"):
+        elif (asset_file in ["mjcf/mocap_humanoid.xml", "mjcf/mocap_humanoid_racket_nohand.xml"]):
             self._dof_obs_size = (52)*3
             self._num_actions = (52)*3
             obj_obs_size = 15
@@ -314,7 +314,19 @@ class HumanoidWholeBody(BaseTask):
 
         self.gym.enable_actor_dof_force_sensors(env_ptr, humanoid_handle)
 
+        preserve_r_wrist_asset_color = asset_file in [
+            "mjcf/mocap_humanoid.xml",
+            "mjcf/mocap_humanoid_racket_nohand.xml",
+        ]
+        r_wrist_body_id = None
+        if preserve_r_wrist_asset_color:
+            r_wrist_body_id = self.gym.find_actor_rigid_body_handle(
+                env_ptr, humanoid_handle, "R_Wrist"
+            )
+
         for j in range(self.num_bodies):
+            if preserve_r_wrist_asset_color and j == r_wrist_body_id:
+                continue
             self.gym.set_rigid_body_color(env_ptr, humanoid_handle, j, gymapi.MESH_VISUAL, gymapi.Vec3(0.54, 0.85, 0.2))
 
         if (self._pd_control):

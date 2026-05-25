@@ -126,19 +126,11 @@ class SkillMimicPlayerContinuous(common_player.CommonPlayer):
             done_indices = []
 
             if self.env.task.play_dataset:
-                # play dataset
-                while True: #Z
-                    all_obs = []
-                    for t in range(self.env.task.max_episode_length): 
-                        obs_buf = self.env.task.play_dataset_step(t) # t
-                        all_obs.append(obs_buf.clone())
-                    break
-                all_obs_tensor = torch.stack(all_obs)
-                # os.makedirs("skillmimic/data/obs/", exist_ok=True) 
-                # path = "skillmimic/data/obs/layup.pt"
-                # torch.save(all_obs_tensor, path)
-                # print("save observation of reference @", path)
-                exit()
+                # Loop the reference motion until the viewer is closed or the
+                # process is interrupted manually.
+                while True:
+                    for t in range(self.env.task.max_episode_length):
+                        self.env.task.play_dataset_step(t)
             else:
                 # try:
                 # inference
@@ -401,5 +393,4 @@ class SkillMimicPlayerContinuous(common_player.CommonPlayer):
 
     def _amp_debug(self, info):
         return
-
 

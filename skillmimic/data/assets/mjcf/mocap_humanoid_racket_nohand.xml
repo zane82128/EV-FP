@@ -242,7 +242,7 @@
 		            <joint name="R_Wrist_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		            <joint name="R_Wrist_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		            <joint name="R_Wrist_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		            <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.06 0 0" size="0.01"/>
+		            <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.06 0 0" size="0.01" rgba="0 0 0 0"/>
 		            <geom name="R_Racket_Handle" type="mesh" mesh="R_Racket_Handle_Mesh" contype="1" conaffinity="1" density="8" pos="-0.072 0 0"
 		                  quat="1 0 0 0" rgba="0.50 0.31 0.12 1"/>
 		            <geom name="R_Racket_Blade" type="mesh" mesh="R_Racket_Blade_Mesh" contype="1" conaffinity="1" density="8" pos="-0.072 0 0"
@@ -251,17 +251,17 @@
 		              <joint name="R_Index1_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Index1_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Index1_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		              <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0343 0 0" size="0.0092"/>
+		              <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0343 0 0" size="0.0092" rgba="0 0 0 0"/>
 		              <body name="R_Index2" pos="-0.0343 0 0">
 		                <joint name="R_Index2_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Index2_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Index2_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.02401 0 0" size="0.0076"/>
+		                <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.02401 0 0" size="0.0076" rgba="0 0 0 0"/>
 		                <body name="R_Index3" pos="-0.02401 0 0">
 		                  <joint name="R_Index3_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Index3_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Index3_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                  <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0149205 0 0" size="0.0069"/>
+		                  <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0149205 0 0" size="0.0069" rgba="0 0 0 0"/>
 		                </body>
 		              </body>
 		            </body>
@@ -269,17 +269,17 @@
 		              <joint name="R_Middle1_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Middle1_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Middle1_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		              <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.04116 0 0" size="0.0094"/>
+		              <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.04116 0 0" size="0.0094" rgba="0 0 0 0"/>
 		              <body name="R_Middle2" pos="-0.04116 0 0">
 		                <joint name="R_Middle2_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Middle2_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Middle2_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.028812 0 0" size="0.0071"/>
+		                <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.028812 0 0" size="0.0071" rgba="0 0 0 0"/>
 		                <body name="R_Middle3" pos="-0.028812 0 0">
 		                  <joint name="R_Middle3_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Middle3_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Middle3_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                  <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0179046 0 0" size="0.0064"/>
+		                  <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0179046 0 0" size="0.0064" rgba="0 0 0 0"/>
 		                </body>
 		              </body>
 		            </body>
@@ -287,17 +287,17 @@
 		              <joint name="R_Pinky1_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Pinky1_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Pinky1_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		              <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0267662 0 0" size="0.007"/>
+		              <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0267662 0 0" size="0.007" rgba="0 0 0 0"/>
 		              <body name="R_Pinky2" pos="-0.0267662 0 0">
 		                <joint name="R_Pinky2_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Pinky2_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Pinky2_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0187364 0 0" size="0.0063"/>
+		                <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0187364 0 0" size="0.0063" rgba="0 0 0 0"/>
 		                <body name="R_Pinky3" pos="-0.0187364 0 0">
 		                  <joint name="R_Pinky3_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Pinky3_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Pinky3_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                  <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0116433 0 0" size="0.0052"/>
+		                  <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0116433 0 0" size="0.0052" rgba="0 0 0 0"/>
 		                </body>
 		              </body>
 		            </body>
@@ -305,17 +305,17 @@
 		              <joint name="R_Ring1_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Ring1_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Ring1_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		              <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.039445 0 0" size="0.0079"/>
+		              <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.039445 0 0" size="0.0079" rgba="0 0 0 0"/>
 		              <body name="R_Ring2" pos="-0.039445 0 0">
 		                <joint name="R_Ring2_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Ring2_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Ring2_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0276115 0 0" size="0.0072"/>
+		                <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0276115 0 0" size="0.0072" rgba="0 0 0 0"/>
 		                <body name="R_Ring3" pos="-0.0276115 0 0">
 		                  <joint name="R_Ring3_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Ring3_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Ring3_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                  <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0171586 0 0" size="0.006"/>
+		                  <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0171586 0 0" size="0.006" rgba="0 0 0 0"/>
 		                </body>
 		              </body>
 		            </body>
@@ -323,17 +323,17 @@
 		              <joint name="R_Thumb1_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Thumb1_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		              <joint name="R_Thumb1_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		              <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.0294 0 0.01" size="0.0122"/>
+		              <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.0294 0 0.01" size="0.0122" rgba="0 0 0 0"/>
 		              <body name="R_Thumb2" pos="-0.0294 0 0.01">
 		                <joint name="R_Thumb2_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Thumb2_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                <joint name="R_Thumb2_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.02058 0 0" size="0.0093"/>
+		                <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.02058 0 0" size="0.0093" rgba="0 0 0 0"/>
 		                <body name="R_Thumb3" pos="-0.02058 0 0">
 		                  <joint name="R_Thumb3_x" type="hinge" pos="0 0 0" axis="1 0 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Thumb3_y" type="hinge" pos="0 0 0" axis="0 1 0" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
 		                  <joint name="R_Thumb3_z" type="hinge" pos="0 0 0" axis="0 0 1" stiffness="100" damping="10" armature="0.02" range="-180.0000 180.0000"/>
-		                  <geom type="capsule" contype="1" conaffinity="1" density="1000" fromto="0 0 0 -0.012789 0 0" size="0.009"/>
+		                  <geom type="capsule" contype="0" conaffinity="0" density="1000" fromto="0 0 0 -0.012789 0 0" size="0.009" rgba="0 0 0 0"/>
 		                </body>
 		              </body>
 		            </body>
