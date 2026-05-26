@@ -107,7 +107,6 @@ def resolve_model_path(explicit_path):
     repo_root = here.parents[2]
     candidates = [
         repo_root / "models",
-        repo_root.parent / "InterAct" / "models",
         Path.cwd() / "models",
     ]
     for candidate in candidates:
@@ -117,7 +116,10 @@ def resolve_model_path(explicit_path):
             return candidate
 
     raise FileNotFoundError(
-        "Could not find SMPL-X model files. Pass --model-path pointing to a folder that contains smplx/SMPLX_NEUTRAL.npz."
+        "Could not find SMPL-X model files. "
+        "Expected one of: <repo>/models/smplx/SMPLX_NEUTRAL.npz, "
+        "<cwd>/models/smplx/SMPLX_NEUTRAL.npz, "
+        "or pass --model-path pointing to a folder that contains smplx/SMPLX_NEUTRAL.npz."
     )
 
 

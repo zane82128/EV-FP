@@ -123,7 +123,7 @@ class HumanoidWholeBody(BaseTask):
             self._dof_obs_size = (51)*3
             self._num_actions = (51)*3
             self._num_obs = 1 + (52) * (3 + 6 + 3 + 3) - 3 + 10*3 #V1 + self.condition_size + obj_obs_size + self.get_task_obs_size()
-        elif (asset_file in ["mjcf/mocap_humanoid.xml", "mjcf/mocap_humanoid_racket_nohand.xml"]):
+        elif (asset_file in ["mjcf/mocap_humanoid.xml", "mjcf/mocap_humanoid_hand_only.xml", "mjcf/mocap_humanoid_racket_nohand.xml"]):
             self._dof_obs_size = (52)*3
             self._num_actions = (52)*3
             obj_obs_size = 15

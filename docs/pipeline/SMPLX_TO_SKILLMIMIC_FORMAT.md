@@ -2,6 +2,10 @@
 
 這份文件說明我目前是怎麼把你的 SMPL-X / 4D-Humans 輸出，轉成 SkillMimic-V2 可以 replay / train 的格式。
 
+如果你要的是**組員可以直接照抄命令操作**的版本，請看：
+
+- [SMPLX_TO_SKILLMIMIC_PIPELINE_README.md](./SMPLX_TO_SKILLMIMIC_PIPELINE_README.md)
+
 重點不是「把檔案副檔名改掉」，而是把下面這幾件事對齊：
 
 - 時間範圍對齊：先切出單一 skill clip
@@ -44,6 +48,64 @@ canonical .npz
 - `skillmimic/utils/smpl_to_canonical.py`
 - `skillmimic/utils/canonical_to_skillmimic_pt.py`
 
+### 自動化入口
+
+如果不想手動串 4 支腳本，現在可以直接用：
+
+- `skillmimic/utils/smplx_to_skillmimic_pipeline.py`
+
+它會自動串起：
+
+1. clip extraction
+2. `results.pkl -> source_joints`
+3. canonical retarget
+4. final `.pt` packing
+5. optional validation
+
+注意：
+
+- 這支自動化入口目前對應的是**現有 human-only / Phase 1 流程**
+- final packing 仍然使用目前的 `canonical_to_skillmimic_pt.py`
+- 也就是說它現在產生的是 **dummy object + zero contact** 的 BallPlay `.pt`
+
+如果之後要做 `Phase 2` 的真實球軌跡、桌子、contact timeline，
+還需要另外擴充 final packing 和 env/task。
+
+最常見的用法是：
+
+```bash
+python skillmimic/utils/smplx_to_skillmimic_pipeline.py \
+  --smpl-path /path/to/subject-1.smpl \
+  --results-pkl /path/to/results.pkl \
+  --segments-json /path/to/subject-1_serve_segments.json \
+  --output-root /path/to/output_bundle \
+  --subject subject-1 \
+  --coord-transform y_up_to_z_up \
+  --phase1-human-only
+```
+
+如果影片本身就只有一段 skill，也可以不先手寫 segment JSON，改用 full-clip mode：
+
+```bash
+python skillmimic/utils/smplx_to_skillmimic_pipeline.py \
+  --smpl-path /path/to/subject-1.smpl \
+  --results-pkl /path/to/results.pkl \
+  --output-root /path/to/output_bundle \
+  --subject subject-1 \
+  --full-clip-skill-id 1 \
+  --full-clip-skill-name serve \
+  --coord-transform y_up_to_z_up \
+  --phase1-human-only
+```
+
+輸出會集中在：
+
+- `<output-root>/clips`
+- `<output-root>/source_joints`
+- `<output-root>/canonical`
+- `<output-root>/motions`
+- `<output-root>/manifest.json`
+
 ---
 
 ## 2. Step 1: 先把整段 `.smpl` 切成單一 skill clip
@@ -66,7 +128,7 @@ canonical .npz
 
 `serve` 的 clip 目前是：
 
-- `data/Serve/01/extracted_clips_subject1/serve/001_serve_0001.npz`
+- `data/clips/serve_01/subject-1/serve/001_serve_0001.npz`
 
 裡面的 shape 是：
 
@@ -75,7 +137,7 @@ canonical .npz
 
 `forehand` 的 clip 目前是：
 
-- `data/Forehand/match4_001_smplx/extracted_clips_subject1/forehand/002_forehand_0001.npz`
+- `data/clips/match4_001_forehand/subject-1/forehand/002_forehand_0001.npz`
 
 裡面的 shape 是：
 
@@ -138,8 +200,8 @@ clip 裡的 `body_pose [T, 22, 3]` 是 local rotation，不是世界座標 joint
 
 目前輸出的 `source_joints` 是：
 
-- `data/source_joints_subject1/001_serve_0001.npy`
-- `data/source_joints_subject1/002_forehand_0001.npy`
+- `data/source_joints/serve_01/subject-1/001_serve_0001.npy`
+- `data/source_joints/match4_001_forehand/subject-1/002_forehand_0001.npy`
 
 shape 分別是：
 
@@ -191,8 +253,8 @@ L_Wrist, R_Wrist
 
 例如目前：
 
-- `data/canonical_subject1/serve/001_serve_0001.npz`
-- `data/canonical_subject1/forehand/002_forehand_0001.npz`
+- `data/canonical/serve_01/subject-1/001_serve_0001.npz`
+- `data/canonical/match4_001_forehand/subject-1/002_forehand_0001.npz`
 
 ### 4.1 先把座標系對齊
 
@@ -431,11 +493,11 @@ canonical 只是中間格式，最後還要打包成 `.pt`。
 來源：
 
 - clip:
-  `data/Serve/01/extracted_clips_subject1/serve/001_serve_0001.npz`
+  `data/clips/serve_01/subject-1/serve/001_serve_0001.npz`
 - source joints:
-  `data/source_joints_subject1/001_serve_0001.npy`
+  `data/source_joints/serve_01/subject-1/001_serve_0001.npy`
 - canonical:
-  `data/canonical_subject1/serve/001_serve_0001.npz`
+  `data/canonical/serve_01/subject-1/001_serve_0001.npz`
 - final pt:
   `skillmimic/data/motions/TableTennis/serve/001_serve_0001.pt`
 
@@ -452,11 +514,11 @@ shape：
 來源：
 
 - clip:
-  `data/Forehand/match4_001_smplx/extracted_clips_subject1/forehand/002_forehand_0001.npz`
+  `data/clips/match4_001_forehand/subject-1/forehand/002_forehand_0001.npz`
 - source joints:
-  `data/source_joints_subject1/002_forehand_0001.npy`
+  `data/source_joints/match4_001_forehand/subject-1/002_forehand_0001.npy`
 - canonical:
-  `data/canonical_subject1/forehand/002_forehand_0001.npz`
+  `data/canonical/match4_001_forehand/subject-1/002_forehand_0001.npz`
 - final pt:
   `skillmimic/data/motions/TableTennis/forehand/002_forehand_0001.pt`
 
