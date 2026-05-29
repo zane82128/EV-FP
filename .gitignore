@@ -45,9 +45,12 @@ skillmimic/data/motions/
 
 # Local model assets
 models/smplx/
+models/smplx/*.npz
+models/smplx/*.pkl
 
 # Local papers / large references
 Yu et al. - 2025 - SkillMimic-V2 Learning Robust and Generalizable Interaction Skills from Sparse and Noisy Demonstrat.pdf
+*.pdf
 
 # Optional: if you do not want to version converted table-tennis motions,
 # uncomment the next line.
