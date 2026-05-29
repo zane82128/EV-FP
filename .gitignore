@@ -1,3 +1,5 @@
+skillmimic/data/motions/
+TableTennis_splits_ori/
 # Local tooling
 .specstory/
 .vscode/
@@ -36,9 +38,13 @@ nohup.out
 skillmimic/data/images/
 skillmimic/data/videos/
 skillmimic/data/replay_preview/
+skillmimic/data/motions/
 
 # Raw data and intermediate conversion artifacts
 /data/
+
+# Local model assets
+models/smplx/
 
 # Local papers / large references
 Yu et al. - 2025 - SkillMimic-V2 Learning Robust and Generalizable Interaction Skills from Sparse and Noisy Demonstrat.pdf

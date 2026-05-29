@@ -13,6 +13,7 @@ Usage:
   bash scripts/convert_smplx_session_to_skillmimic.sh \
     --session-dir data/archive/<session_name> \
     --skill-name serve \
+    [--skill-id 1] \
     --output data/converted/<session_name>_serve \
     [--subject subject-1] \
     [--model-path models]
@@ -38,6 +39,9 @@ Supported skill names:
   forehand
   backhand
 
+Custom labels:
+  If --skill-name is not in the default set above, pass --skill-id explicitly.
+
 Example:
   bash scripts/convert_smplx_session_to_skillmimic.sh \
     --session-dir data/archive/match4_001 \
@@ -53,6 +57,7 @@ die() {
 
 SESSION_DIR=""
 SKILL_NAME=""
+SKILL_ID=""
 OUTPUT_ROOT=""
 SUBJECT="subject-1"
 MODEL_PATH="${REPO_ROOT}/models"
@@ -63,6 +68,8 @@ while [[ $# -gt 0 ]]; do
       SESSION_DIR="${2:-}"; shift 2 ;;
     --skill-name)
       SKILL_NAME="${2:-}"; shift 2 ;;
+    --skill-id)
+      SKILL_ID="${2:-}"; shift 2 ;;
     --output)
       OUTPUT_ROOT="${2:-}"; shift 2 ;;
     --subject)
@@ -99,11 +106,19 @@ fi
 mkdir -p "${SEGMENTS_DIR}"
 
 echo "=== Step 1: generate full-clip segments.json ==="
-"${PYTHON_BIN}" "${GENERATE_SEGMENTS_SCRIPT}" \
+GENERATE_CMD=(
+  "${PYTHON_BIN}" "${GENERATE_SEGMENTS_SCRIPT}"
   "${SMPL_PATH}" \
-  --skill-name "${SKILL_NAME}" \
-  --subject "${SUBJECT}" \
+  --skill-name "${SKILL_NAME}"
+  --subject "${SUBJECT}"
   --output "${SEGMENTS_PATH}"
+)
+
+if [[ -n "${SKILL_ID}" ]]; then
+  GENERATE_CMD+=(--skill-id "${SKILL_ID}")
+fi
+
+"${GENERATE_CMD[@]}"
 
 echo
 echo "=== Step 2: run SMPL-X -> SkillMimic pipeline ==="
